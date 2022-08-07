@@ -3,7 +3,6 @@ from flask import Flask, render_template, request
 from pymongo import MongoClient
 from dotenv import dotenv_values
 
-
 app = Flask(__name__)
 
 config = dotenv_values(".env")
@@ -18,8 +17,7 @@ def index():
         app.db.messages.insert_one({"message": message, "date": formatted_date})
         messages = [
             (message["message"],
-             message["date"],
-             datetime.datetime.today().strftime("%Y-%m-%d") == message["date"])
+             message["date"])
             for message in app.db.messages.find({})
         ]
         return render_template('index.html', messages=messages, title="Recent Messages")
